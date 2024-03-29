@@ -1,0 +1,17 @@
+---
+version: '3'
+services:
+  wp:
+    image: wordpress
+    ports:
+      - 8080:80
+    deploy:
+       replicas: 3
+  mydb:
+    image: mysql
+    environment:
+       MYSQL_ROOT_PASSWORD: Password
+    links:
+       - wp:mywp  
+    deploy:
+       replicas: 2   

@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: sql-deploy
+spec:
+    replicas: 3
+    selector:
+       matchLabels:
+          name: mydb
+          author: sree
+    template:
+       metadata:
+          name: mydb
+          labels:
+             name: mydb
+             author: sree
+       spec:
+          containers:
+              - name: mydb
+                image: mysql:5
+                env:
+                   - name: MYSQL_ROOT_PASSWORD
+                     value: Password
+                ports:
+                   - containerPort: 8888
+                     hostPort: 3306                  

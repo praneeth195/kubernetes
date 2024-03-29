@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: nginx-deployment
+spec:
+   replicas: 2
+   selector:
+      matchLabels:
+          name: nginx-pod
+          type: proxy
+   template:
+       metadata:
+         name: nginx-pod
+         labels:
+             name: nginx-pod
+             type: proxy
+       spec:
+         containers:
+            - name: nginx-containers
+              image: nginx
+         affinity:
+             nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                   nodeSelectorTerms:
+                      - matchExpressions:
+                          - key: cat
+                            operator: In
+                            values:
+                              -  tom
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: nodeport-service
+spec:
+   type: LoadBalancer
+   ports:
+     - targetPort: 80
+       port: 80
+       nodePort: 30200
+   selector:
+      name: nginx-pod
+      type: proxy
+...        
+
+

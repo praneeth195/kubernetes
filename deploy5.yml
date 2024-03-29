@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: postgres-deployment
+spec:
+   replicas: 3
+   selector:
+       matchLabels:
+          name: db
+          type: db
+          author: sree
+   template:
+      metadata:
+          name: postgres-pod
+          labels:
+             name: db
+             type: db
+             author: sree
+      spec:
+         containers:
+           - name: postgress-container
+             image: postgres
+             env:
+               - name: POSTGRES_PASSWORD
+                 valueFrom:
+                   secretKeyRef: 
+                       name: postgres-secret
+                       key: password
+               - name: POSTGRES_USER
+                 valueFrom:   
+                   secretKeyRef:
+                       name: postgres-secret
+                       key: username
+               - name: POSTGRES_DB
+                 valueFrom:
+                    secretKeyRef:
+                        name: postgres-secret
+                        key: dbname
+...                          
+
+                            

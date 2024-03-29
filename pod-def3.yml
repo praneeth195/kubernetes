@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+ name: mydb2
+ labels:
+    author: praneeth
+spec:
+   containers:
+       - name: postgres-pod
+         image: postgres
+         env:
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_USER
+              value: Sree
+            - name: POSTGRES_DB
+              value: mydb
+...                

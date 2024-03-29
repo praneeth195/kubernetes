@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+   name: nginx-daemon
+   labels:
+      mode: global
+spec:
+   selector:
+      matchLabels:
+         pod: nginx-pod
+         mode: global
+   template:
+         metadata:
+             name: mynginx-pod
+             labels:
+                 pod: nginx-pod
+                 mode: global
+         spec:
+             containers:
+                  - name: mynginx
+                    image: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: nodeport-service
+spec:
+    type: NodePort
+    ports:
+       - targetPort: 80
+         port: 80
+         nodePort: 30100
+    selector:
+       pod: nginx-pod
+       mode: global      
+...         

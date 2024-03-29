@@ -1,0 +1,2 @@
+
+gcloud compute firewall-rules create <rule-name> --allow tcp:9090 

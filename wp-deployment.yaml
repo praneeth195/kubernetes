@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: wp
+  name: wp
+spec:
+  replicas: 3
+  strategy: {}
+  selector: 
+     matchLabels:
+        io.kompose.service: wp
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: wp
+    spec:
+      containers:
+      - image: wordpress
+        name: wp
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}
