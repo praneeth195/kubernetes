@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: httpd-deployment
+   labels:
+      type: apache
+spec:
+   replicas: 3
+   selector:
+     matchLabels:
+          type: apache
+          author: sree
+   template:
+      metadata:
+            name: httpd-pod
+            labels:
+               type: apache
+               author: sree
+      spec:
+         containers:
+            - name: httpd
+              image: httpd
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: loadbalancer-service
+spec:
+  type: NodePort
+  ports:
+     - targetPort: 80
+       port: 80
+       nodePort: 30100
+  selector:
+      type: apache
+      author: sree    

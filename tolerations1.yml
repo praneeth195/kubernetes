@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+   name: tomcat-daemon
+spec:
+   selector:
+      matchLabels:
+          author: sree
+   template:
+     metadata:
+         name: tomcat-pod
+         labels:
+            author: sree
+     spec:
+       containers:
+          - name: tomcat-c
+            image: tomee
+            ports:
+                 - containerPort: 8080
+                   hostPort: 8080
+       tolerations:
+            - key: cat
+              operator: Equal
+              value: tom
+              effect: NoSchedule    
+
